@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resource Pulse | Water and Electricity Tracking System</title>
+    <meta
+      name="description"
+      content="A responsive water and electricity tracking system with real-time updates, insights, and elegant analytics."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <nav class="topbar">
+          <div class="brand">
+            <span class="brand__mark">RP</span>
+            <div>
+              <p class="eyebrow">Sustainable Utility Intelligence</p>
+              <h1>Resource Pulse</h1>
+            </div>
+          </div>
+          <a class="ghost-link" href="#tracker">Start Tracking</a>
+        </nav>
+
+        <section class="hero__content">
+          <div class="hero__copy">
+            <p class="eyebrow">Water and Electricity Tracking System</p>
+            <h2>
+              Monitor consumption, reveal patterns, and guide smarter daily
+              resource decisions.
+            </h2>
+            <p class="hero__text">
+              Built as a syllabus-aligned full-stack project using semantic
+              HTML, modern CSS, JavaScript modules, DOM interaction, async data
+              fetching, and a Node.js + Express backend.
+            </p>
+            <div class="hero__actions">
+              <a class="button button--primary" href="#dashboard">View Dashboard</a>
+              <a class="button button--secondary" href="#tracker">Add Reading</a>
+            </div>
+          </div>
+
+          <div class="hero__panel glass-card">
+            <p class="panel__label">Live System Snapshot</p>
+            <div class="metric-grid" id="heroMetrics">
+              <article>
+                <span>Total Entries</span>
+                <strong id="heroEntries">--</strong>
+              </article>
+              <article>
+                <span>Water Usage</span>
+                <strong id="heroWater">--</strong>
+              </article>
+              <article>
+                <span>Electricity</span>
+                <strong id="heroElectricity">--</strong>
+              </article>
+              <article>
+                <span>Total Cost</span>
+                <strong id="heroCost">--</strong>
+              </article>
+            </div>
+            <div class="live-pill" id="liveStatus">Connecting to live updates...</div>
+          </div>
+        </section>
+      </header>
+
+      <main>
+        <section class="dashboard-section" id="dashboard">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Analytics Dashboard</p>
+              <h3>Elegant monitoring for essential utilities</h3>
+            </div>
+            <p class="section-copy">
+              Review usage, compare trends, and act on recommendations from one
+              responsive interface.
+            </p>
+          </div>
+
+          <div class="dashboard-grid">
+            <article class="glass-card stat-card">
+              <p>Water Consumption</p>
+              <strong id="waterTotal">--</strong>
+              <span>Litres recorded across all entries</span>
+            </article>
+            <article class="glass-card stat-card">
+              <p>Electricity Consumption</p>
+              <strong id="electricityTotal">--</strong>
+              <span>kWh monitored from submitted readings</span>
+            </article>
+            <article class="glass-card stat-card">
+              <p>Total Cost</p>
+              <strong id="costTotal">--</strong>
+              <span>Approximate utility spend across the dataset</span>
+            </article>
+            <article class="glass-card stat-card">
+              <p>Health Check</p>
+              <strong id="healthStatus">Ready</strong>
+              <span>Backend session, routes, and request flow status</span>
+            </article>
+          </div>
+
+          <div class="insight-layout">
+            <article class="glass-card chart-card">
+              <div class="card-head">
+                <div>
+                  <p class="eyebrow">Usage Trend</p>
+                  <h4>Daily flow overview</h4>
+                </div>
+                <span class="chip">DOM-rendered chart</span>
+              </div>
+              <div id="trendChart" class="trend-chart" aria-label="Usage trend chart"></div>
+            </article>
+
+            <article class="glass-card insight-card">
+              <div class="card-head">
+                <div>
+                  <p class="eyebrow">Smart Recommendations</p>
+                  <h4>Usage insights</h4>
+                </div>
+              </div>
+              <div id="insightCards" class="insight-stack"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="tracker-section" id="tracker">
+          <article class="glass-card tracker-form-card">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Log Consumption</p>
+                <h3>Add a new utility reading</h3>
+              </div>
+            </div>
+
+            <form id="readingForm" class="tracker-form">
+              <label>
+                Resource Type
+                <select name="resourceType" required>
+                  <option value="water">Water</option>
+                  <option value="electricity">Electricity</option>
+                </select>
+              </label>
+              <label>
+                Usage Amount
+                <input type="number" name="amount" min="1" step="0.01" placeholder="Enter amount" required />
+              </label>
+              <label>
+                Unit
+                <input type="text" name="unit" placeholder="L or kWh" required />
+              </label>
+              <label>
+                Cost
+                <input type="number" name="cost" min="0" step="0.01" placeholder="Approximate cost" required />
+              </label>
+              <label>
+                Location
+                <input type="text" name="location" placeholder="Main Building / Office Wing" required />
+              </label>
+              <label>
+                Recorded At
+                <input type="datetime-local" name="recordedAt" required />
+              </label>
+              <label class="tracker-form__full">
+                Notes
+                <textarea name="notes" rows="3" placeholder="Optional usage context"></textarea>
+              </label>
+              <div class="tracker-form__actions tracker-form__full">
+                <button class="button button--primary" type="submit">Save Reading</button>
+                <button class="button button--secondary" type="reset">Reset</button>
+              </div>
+            </form>
+            <p class="form-feedback" id="formFeedback"></p>
+          </article>
+
+          <article class="glass-card activity-card">
+            <div class="card-head">
+              <div>
+                <p class="eyebrow">Recent Activity</p>
+                <h4>Real-time readings log</h4>
+              </div>
+              <span class="chip">Event delegation enabled</span>
+            </div>
+            <div id="activityFeed" class="activity-feed"></div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="/js/app.js"></script>
+  </body>
+</html>

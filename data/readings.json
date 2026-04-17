@@ -1,0 +1,92 @@
+[
+  {
+    "id": "rd-1776422182518",
+    "resourceType": "electricity",
+    "amount": 200,
+    "unit": "kWh",
+    "cost": 7.45,
+    "location": "Main Building",
+    "recordedAt": "2026-04-17T10:35:00.000Z",
+    "notes": "babu dhokha de di"
+  },
+  {
+    "id": "rd-1776420158868",
+    "resourceType": "water",
+    "amount": 400,
+    "unit": "L",
+    "cost": 20,
+    "location": "office wing",
+    "recordedAt": "2026-04-17T10:02:00.000Z",
+    "notes": ""
+  },
+  {
+    "id": "rd-1776418599593",
+    "cost": 12,
+    "amount": 123,
+    "resourceType": "water",
+    "recordedAt": "2026-04-17T09:30:00.000Z",
+    "unit": "L",
+    "location": "Test Block",
+    "notes": "Manual test"
+  },
+  {
+    "id": "rd-001",
+    "resourceType": "water",
+    "amount": 420,
+    "unit": "L",
+    "cost": 18,
+    "recordedAt": "2026-04-10T06:30:00.000Z",
+    "location": "Main Building",
+    "notes": "Morning tank usage"
+  },
+  {
+    "id": "rd-002",
+    "resourceType": "electricity",
+    "amount": 34,
+    "unit": "kWh",
+    "cost": 7,
+    "recordedAt": "2026-04-10T18:15:00.000Z",
+    "location": "Main Building",
+    "notes": "Air conditioning and appliances"
+  },
+  {
+    "id": "rd-003",
+    "resourceType": "water",
+    "amount": 390,
+    "unit": "L",
+    "cost": 16,
+    "recordedAt": "2026-04-11T06:45:00.000Z",
+    "location": "Garden Zone",
+    "notes": "Irrigation cycle"
+  },
+  {
+    "id": "rd-004",
+    "resourceType": "electricity",
+    "amount": 28,
+    "unit": "kWh",
+    "cost": 6,
+    "recordedAt": "2026-04-11T19:10:00.000Z",
+    "location": "Office Wing",
+    "notes": "Evening equipment load"
+  },
+  {
+    "id": "rd-005",
+    "resourceType": "water",
+    "amount": 470,
+    "unit": "L",
+    "cost": 20,
+    "recordedAt": "2026-04-12T07:05:00.000Z",
+    "location": "Main Building",
+    "notes": "Kitchen and cleaning"
+  },
+  {
+    "id": "rd-006",
+    "resourceType": "electricity",
+    "amount": 39,
+    "unit": "kWh",
+    "cost": 8,
+    "recordedAt": "2026-04-12T20:05:00.000Z",
+    "location": "Office Wing",
+    "notes": "Peak hour demand"
+  }
+]

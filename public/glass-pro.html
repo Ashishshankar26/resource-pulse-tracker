@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resource Pulse Pro | Glass Dashboard</title>
+    <meta
+      name="description"
+      content="A professional glassmorphism dark-theme dashboard for tracking water and electricity consumption."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles-glass-pro.css" />
+  </head>
+  <body>
+    <div class="bg-orb bg-orb--a"></div>
+    <div class="bg-orb bg-orb--b"></div>
+    <div class="bg-grid"></div>
+
+    <div class="pro-shell">
+      <header class="topbar glass">
+        <a class="brand" href="#overview">
+          <span class="brand__icon">RP</span>
+          <span class="brand__text">
+            <strong>Resource Pulse Pro</strong>
+            <small>Professional Glass Dashboard</small>
+          </span>
+        </a>
+        <nav class="topbar__nav">
+          <a href="/index.html">Original Website</a>
+          <a href="#capture">Add Reading</a>
+        </nav>
+      </header>
+
+      <section class="hero">
+        <article class="hero__copy glass glass--strong">
+          <p class="eyebrow">Production Ready Alternate Design</p>
+          <h1>Smart utility operations with a refined dark glassmorphism system.</h1>
+          <p class="hero__text">
+            This version focuses on clean hierarchy, premium presentation,
+            professional spacing, and a dashboard structure that feels ready for
+            a real product demo or final project showcase.
+          </p>
+          <div class="hero__actions">
+            <a class="button button--primary" href="#overview">View Dashboard</a>
+            <a class="button button--secondary" href="#capture">Track Usage</a>
+          </div>
+        </article>
+
+        <article class="hero__status glass">
+          <div class="live-pill" id="proLive">Connecting live updates...</div>
+          <div class="hero-metrics">
+            <article>
+              <span>Total Entries</span>
+              <strong id="proEntries">--</strong>
+            </article>
+            <article>
+              <span>Total Cost</span>
+              <strong id="proCost">--</strong>
+            </article>
+            <article>
+              <span>Water Usage</span>
+              <strong id="proWater">--</strong>
+            </article>
+            <article>
+              <span>Electricity</span>
+              <strong id="proElectricity">--</strong>
+            </article>
+          </div>
+        </article>
+      </section>
+
+      <main class="content">
+        <section class="overview" id="overview">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Executive Overview</p>
+              <h2>Consumption intelligence in one responsive workspace</h2>
+            </div>
+            <span class="status-chip" id="proHealth">Loading</span>
+          </div>
+
+          <div class="summary-grid">
+            <article class="summary-card glass">
+              <span class="summary-card__label">Water Consumption</span>
+              <strong id="waterTotalPro">--</strong>
+              <p>Total water recorded across all submitted readings</p>
+            </article>
+            <article class="summary-card glass">
+              <span class="summary-card__label">Electricity Consumption</span>
+              <strong id="electricityTotalPro">--</strong>
+              <p>Total electricity monitored from the dashboard</p>
+            </article>
+            <article class="summary-card glass">
+              <span class="summary-card__label">Average Entry Cost</span>
+              <strong id="averageCostPro">--</strong>
+              <p>Average estimated utility cost per reading</p>
+            </article>
+            <article class="summary-card glass">
+              <span class="summary-card__label">Trend Days</span>
+              <strong id="trendDaysPro">--</strong>
+              <p>Number of dated activity points in the trend view</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="analytics-grid">
+          <article class="glass chart-panel">
+            <div class="section-head section-head--compact">
+              <div>
+                <p class="eyebrow">Trend Analysis</p>
+                <h3>Daily water and electricity trajectory</h3>
+              </div>
+            </div>
+            <div class="chart-wrap">
+              <svg id="proTrendChart" viewBox="0 0 840 340" aria-label="Trend chart"></svg>
+            </div>
+          </article>
+
+          <article class="glass mix-panel">
+            <div class="section-head section-head--compact">
+              <div>
+                <p class="eyebrow">Resource Mix</p>
+                <h3>Consumption distribution</h3>
+              </div>
+            </div>
+            <div id="proMix" class="mix-panel__content"></div>
+          </article>
+        </section>
+
+        <section class="details-grid">
+          <article class="glass insights-panel">
+            <div class="section-head section-head--compact">
+              <div>
+                <p class="eyebrow">Operational Recommendations</p>
+                <h3>Suggested optimization actions</h3>
+              </div>
+            </div>
+            <div id="proInsights" class="insight-list"></div>
+          </article>
+
+          <article class="glass activity-panel">
+            <div class="section-head section-head--compact">
+              <div>
+                <p class="eyebrow">Recent Activity</p>
+                <h3>Latest submitted utility readings</h3>
+              </div>
+            </div>
+            <div id="proActivity" class="activity-list"></div>
+          </article>
+        </section>
+
+        <section class="capture-grid" id="capture">
+          <article class="glass capture-panel">
+            <div class="section-head section-head--compact">
+              <div>
+                <p class="eyebrow">Capture Reading</p>
+                <h3>Submit a new water or electricity record</h3>
+              </div>
+            </div>
+
+            <form id="proForm" class="capture-form">
+              <label>
+                Resource Type
+                <select name="resourceType" required>
+                  <option value="water">Water</option>
+                  <option value="electricity">Electricity</option>
+                </select>
+              </label>
+              <label>
+                Usage Amount
+                <input type="number" name="amount" min="1" step="0.01" required />
+              </label>
+              <label>
+                Unit
+                <input type="text" name="unit" placeholder="L or kWh" required />
+              </label>
+              <label>
+                Cost
+                <input type="number" name="cost" min="0" step="0.01" required />
+              </label>
+              <label>
+                Location
+                <input type="text" name="location" placeholder="Main Building / Office Wing" required />
+              </label>
+              <label>
+                Recorded At
+                <input type="datetime-local" name="recordedAt" required />
+              </label>
+              <label class="capture-form__full">
+                Notes
+                <textarea name="notes" rows="4" placeholder="Optional operational note"></textarea>
+              </label>
+              <div class="capture-form__full capture-form__actions">
+                <button class="button button--primary" type="submit">Save Reading</button>
+                <button class="button button--secondary" type="reset">Reset</button>
+              </div>
+            </form>
+            <p id="proMessage" class="form-message"></p>
+          </article>
+
+          <aside class="glass brief-panel">
+            <p class="eyebrow">Design Summary</p>
+            <h3>What changed in this version?</h3>
+            <ul class="brief-list">
+              <li>Professional dark glassmorphism visual system</li>
+              <li>More product-like layout with clearer sectioning</li>
+              <li>Production-style analytics, activity, and form zones</li>
+              <li>Separate alternate page while preserving the original project</li>
+            </ul>
+          </aside>
+        </section>
+      </main>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="/js/app-glass-pro.js"></script>
+  </body>
+</html>
