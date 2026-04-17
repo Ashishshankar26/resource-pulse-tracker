@@ -13,10 +13,23 @@ import { getDemoReadings } from "../utils/demo-readings.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const readingsPath = path.join(__dirname, "..", "..", "data", "readings.json");
+const isVercelRuntime = Boolean(process.env.VERCEL);
+let cachedReadings = null;
 
 async function readFromDisk() {
   const raw = await fs.readFile(readingsPath, "utf8");
   return JSON.parse(raw);
+}
+
+async function getFallbackReadings() {
+  if (isVercelRuntime) {
+    if (!cachedReadings) {
+      cachedReadings = await readFromDisk();
+    }
+    return cachedReadings;
+  }
+
+  return readFromDisk();
 }
 
 function normalizeReading(reading) {
@@ -92,7 +105,7 @@ export async function getAllReadings() {
     return readings.map(normalizeReading);
   }
 
-  return readFromDisk();
+  return getFallbackReadings();
 }
 
 export async function saveAllReadings(readings) {
@@ -114,6 +127,12 @@ export async function saveAllReadings(readings) {
       );
     }
 
+    return;
+  }
+
+  cachedReadings = readings;
+
+  if (isVercelRuntime) {
     return;
   }
 

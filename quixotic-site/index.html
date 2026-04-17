@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resource Pulse Console</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/styles-quixotic-resource.css" />
+  </head>
+  <body data-page="dashboard">
+    <div class="console-shell">
+      <aside class="rail">
+        <a class="brand-lockup" href="#overview">
+          <div class="brand-mark">R</div>
+          <div class="brand-copy">
+            <strong>Resource Pulse</strong>
+            <span>Utility Console</span>
+          </div>
+        </a>
+
+        <div class="rail-section">
+          <span class="rail-section__label">Navigate</span>
+        </div>
+        <div class="rail__stack">
+          <button class="rail-link rail-link--active" type="button" aria-label="Dashboard" data-nav-target="overview">
+            <span class="rail-link__icon rail-link__icon--dashboard"><span></span><span></span><span></span><span></span></span>
+            <span class="rail-link__text">
+              <strong>Dashboard</strong>
+              <small>Full utility view</small>
+            </span>
+          </button>
+          <a class="rail-link" href="/quixotic-water.html" data-page-link="water">
+            <span class="rail-link__icon rail-link__icon--water">W</span>
+            <span class="rail-link__text">
+              <strong>Water</strong>
+              <small>Usage and monthly trends</small>
+            </span>
+          </a>
+          <a class="rail-link" href="/quixotic-electricity.html" data-page-link="electricity">
+            <span class="rail-link__icon rail-link__icon--electricity">E</span>
+            <span class="rail-link__text">
+              <strong>Electricity</strong>
+              <small>Cost and demand insights</small>
+            </span>
+          </a>
+          <button class="rail-link" type="button" aria-label="Reports" data-nav-target="history">
+            <span class="rail-link__icon"><div class="mini-bars"><span></span><span></span><span></span></div></span>
+            <span class="rail-link__text">
+              <strong>Reports</strong>
+              <small>History and exports</small>
+            </span>
+          </button>
+          <button class="rail-link" type="button" aria-label="Capture" data-nav-target="capture-panel">
+            <span class="rail-link__icon"><div class="mini-table"><span></span><span></span></div></span>
+            <span class="rail-link__text">
+              <strong>Capture</strong>
+              <small>Add or update reading</small>
+            </span>
+          </button>
+        </div>
+
+        <div class="rail-side-card">
+          <span class="rail-side-card__label">Live mode</span>
+          <strong id="railModeTitle">Unified monitoring</strong>
+          <p>Switch to a dedicated resource page for deeper usage analysis.</p>
+        </div>
+
+        <div class="rail__stack rail__stack--bottom">
+          <button class="rail-link rail-link--compact" type="button" aria-label="Seed demo data" data-action="seed-demo">
+            <span class="rail-link__icon"><div class="mini-wallet"></div></span>
+            <span class="rail-link__text">
+              <strong>Load Demo</strong>
+              <small>Populate sample readings</small>
+            </span>
+          </button>
+          <button class="rail-link rail-link--compact" type="button" aria-label="Settings" data-action="open-settings">
+            <span class="rail-link__icon"><div class="mini-gear"></div></span>
+            <span class="rail-link__text">
+              <strong>Settings</strong>
+              <small>Theme and layout</small>
+            </span>
+          </button>
+          <button class="rail-link rail-link--compact" type="button" aria-label="Reset" data-action="reset-dashboard">
+            <span class="rail-link__icon"><div class="mini-exit"></div></span>
+            <span class="rail-link__text">
+              <strong>Reset View</strong>
+              <small>Clear filters and form</small>
+            </span>
+          </button>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header class="workspace-top">
+          <nav class="pill-nav">
+            <a class="pill-nav__item pill-nav__item--active" href="#overview" data-nav-target="overview">Dashboard</a>
+            <a class="pill-nav__item" href="/quixotic-water.html">Water</a>
+            <a class="pill-nav__item" href="/quixotic-electricity.html">Electricity</a>
+            <a class="pill-nav__item" href="#history" data-nav-target="history">Reports</a>
+            <a class="pill-nav__item" href="#capture-panel" data-nav-target="capture-panel">Usage Form</a>
+            <a class="pill-nav__item" href="#history" data-nav-target="history">History</a>
+            <a class="pill-nav__item" href="#contacts" data-nav-target="contacts">Contacts</a>
+          </nav>
+
+          <div class="top-actions">
+            <button class="top-action" aria-label="Search" data-action="toggle-search">&#8981;</button>
+            <button class="top-action" aria-label="Notifications" data-action="toggle-notifications">&#9716;</button>
+            <button class="top-action" aria-label="Toggle dark mode" data-action="toggle-theme">&#9789;</button>
+            <button class="top-action" aria-label="Settings" data-action="open-settings">&#9881;</button>
+            <div class="profile-pill">
+              <div class="profile-avatar">A</div>
+            </div>
+          </div>
+        </header>
+
+        <section class="utility-panel-grid">
+          <section class="search-panel" id="searchPanel" hidden>
+            <div class="search-panel__inner">
+              <div class="search-field">
+                <label for="historySearch">Search records</label>
+                <input id="historySearch" type="search" placeholder="Search by resource, location, note, or amount" />
+              </div>
+              <div class="filter-field">
+                <label for="resourceFilter">Resource</label>
+                <select id="resourceFilter">
+                  <option value="">All resources</option>
+                  <option value="water">Water</option>
+                  <option value="electricity">Electricity</option>
+                </select>
+              </div>
+              <div class="filter-field">
+                <label for="locationFilter">Location</label>
+                <select id="locationFilter">
+                  <option value="">All locations</option>
+                </select>
+              </div>
+              <div class="filter-field">
+                <label for="dateFrom">From</label>
+                <input id="dateFrom" type="date" />
+              </div>
+              <div class="filter-field">
+                <label for="dateTo">To</label>
+                <input id="dateTo" type="date" />
+              </div>
+              <button class="search-clear" type="button" data-action="clear-search">Clear</button>
+            </div>
+          </section>
+
+          <section class="drawer-panel" id="notificationsPanel" hidden>
+            <div class="drawer-panel__head">
+              <div>
+                <h3>Notifications</h3>
+                <p>Utility alerts and dashboard updates</p>
+              </div>
+              <button class="icon-chip" type="button" data-action="close-notifications">&#10005;</button>
+            </div>
+            <div class="notification-list" id="notificationList"></div>
+          </section>
+
+          <section class="drawer-panel" id="settingsPanel" hidden>
+            <div class="drawer-panel__head">
+              <div>
+                <h3>Dashboard Settings</h3>
+                <p>Display and workflow preferences</p>
+              </div>
+              <button class="icon-chip" type="button" data-action="close-settings">&#10005;</button>
+            </div>
+            <div class="settings-list">
+              <label class="setting-row">
+                <span>Compact cards</span>
+                <input id="compactModeToggle" type="checkbox" />
+              </label>
+              <label class="setting-row">
+                <span>Highlight water data</span>
+                <input id="highlightWaterToggle" type="checkbox" />
+              </label>
+              <label class="setting-row">
+                <span>Enable sync toasts</span>
+                <input id="toastToggle" type="checkbox" checked />
+              </label>
+              <label class="setting-row">
+                <span>Dark mode</span>
+                <input id="darkModeToggle" type="checkbox" />
+              </label>
+            </div>
+          </section>
+        </section>
+
+        <section class="headline-row" id="overview">
+          <div>
+            <h1>Welcome Back, <span>Ashish</span></h1>
+          </div>
+          <div class="headline-actions">
+            <button class="date-pill" type="button" data-action="toggle-range">17 Apr, 2026 - 17 May, 2026</button>
+            <a class="primary-pill" href="#capture-panel">+ Add New Reading</a>
+          </div>
+        </section>
+
+        <section class="overview-strip">
+          <article class="card overview-card">
+            <span>Total Entries</span>
+            <strong id="proEntries">--</strong>
+          </article>
+          <article class="card overview-card">
+            <span>Total Cost</span>
+            <strong id="proCost">--</strong>
+          </article>
+          <article class="card overview-card">
+            <span>Water Usage</span>
+            <strong id="proWater">--</strong>
+          </article>
+          <article class="card overview-card">
+            <span>Electricity</span>
+            <strong id="proElectricity">--</strong>
+          </article>
+          <article class="card overview-card">
+            <span>Average Cost</span>
+            <strong id="averageCostPro">--</strong>
+          </article>
+          <article class="card overview-card">
+            <span>Trend Days</span>
+            <strong id="trendDaysPro">--</strong>
+          </article>
+          <article class="card overview-card">
+            <span>System Health</span>
+            <strong id="proHealth">Loading</strong>
+          </article>
+        </section>
+
+        <section class="dashboard-grid">
+          <article class="card card--goal">
+            <div class="card-head">
+              <div>
+                <h2>Water Goal</h2>
+                <p>Target household resource balance</p>
+              </div>
+              <button class="icon-chip" type="button" data-action="focus-water">&#8599;</button>
+            </div>
+
+            <div class="utility-card utility-card--water">
+              <div class="utility-card__top">
+                <strong>WATER</strong>
+                <span>&#9716;</span>
+              </div>
+              <div class="utility-card__amount" id="waterGoalValue">--</div>
+              <div class="utility-card__meta">
+                <span>Total tracked litres</span>
+                <span id="entryCount">-- entries</span>
+              </div>
+            </div>
+
+            <div class="mini-stat">
+              <div>
+                <strong>Weekly Savings</strong>
+                <p id="waterRecommendationMini">Loading recommendation...</p>
+              </div>
+              <span class="delta-pill" id="healthBadgeMini">--</span>
+            </div>
+          </article>
+
+          <article class="card card--chart">
+            <div class="card-head">
+              <div>
+                <h2>Consumption Trend</h2>
+                <p>Monthly resource pattern</p>
+              </div>
+              <div class="segment-toggle">
+                <button type="button" data-chart-mode="water">Water</button>
+                <button type="button" class="segment-toggle__active" data-chart-mode="combined">Combined</button>
+              </div>
+            </div>
+            <div class="chart-box">
+              <canvas id="barChart"></canvas>
+            </div>
+          </article>
+
+          <article class="card card--balance" id="budget-card">
+            <div class="card-head">
+              <div>
+                <h2>Budget Goal</h2>
+                <p>Total utility cost visibility</p>
+              </div>
+              <button class="icon-chip" type="button" data-action="focus-budget">&#8599;</button>
+            </div>
+            <div class="balance-number" id="totalCostCard">--</div>
+            <div class="line-chart-box">
+              <canvas id="lineChart"></canvas>
+            </div>
+            <div class="balance-actions">
+              <button type="button" data-line-mode="water">Water &#8595;</button>
+              <button type="button" data-line-mode="electricity">Power &#8593;</button>
+            </div>
+          </article>
+
+          <article class="card card--history" id="history">
+            <div class="card-head card-head--history">
+              <div>
+                <h2>Usage History</h2>
+                <p>Recent water and electricity readings</p>
+              </div>
+              <div class="card-head__actions">
+                <button class="chip-button" type="button" data-action="refresh-history">Refresh</button>
+                <button class="chip-button" type="button" data-action="export-csv">Export CSV</button>
+                <button class="chip-button" type="button" data-action="export-pdf">Export PDF</button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Resource</th>
+                    <th>Location</th>
+                    <th>Recorded</th>
+                    <th>Status</th>
+                    <th>Amount</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="historyBody"></tbody>
+              </table>
+            </div>
+            <div class="history-footer-grid">
+              <article class="history-insight-card">
+                <span class="history-footer-label">Filtered records</span>
+                <strong id="filteredEntriesCount">0</strong>
+                <p>Visible rows based on your current search, date, and location filters.</p>
+              </article>
+              <article class="history-insight-card">
+                <span class="history-footer-label">Current focus</span>
+                <strong id="historyFocusLabel">All resources</strong>
+                <p id="historyFocusDetail">Review water and electricity usage together for faster comparisons.</p>
+              </article>
+              <article class="history-insight-card">
+                <span class="history-footer-label">Latest note</span>
+                <strong id="latestHistoryLocation">No recent activity</strong>
+                <p id="latestHistoryNote">Add a reading to surface the latest operational note here.</p>
+              </article>
+            </div>
+          </article>
+
+          <div class="side-stack">
+            <article class="card side-card side-card--status">
+              <div class="live-pill" id="proLive">Connecting live updates...</div>
+            </article>
+
+            <article class="card side-card">
+              <div class="card-head">
+                <div>
+                  <h2>Electricity Goal</h2>
+                  <p>Cost and usage overview</p>
+                </div>
+                <button class="icon-chip" type="button" data-action="focus-electricity">&#8599;</button>
+              </div>
+              <div class="side-figure" id="electricityGoalValue">--</div>
+              <div class="side-meta">
+                <span>Efficiency signal</span>
+                <span class="delta-pill" id="efficiencyDelta">--</span>
+              </div>
+            </article>
+
+            <article class="card side-card" id="capture-panel">
+              <div class="card-head">
+                <div>
+                  <h2>Quick Capture</h2>
+                  <p>Submit or update a usage reading</p>
+                </div>
+              </div>
+              <form id="capture" class="compact-form">
+                <input type="hidden" name="editingId" />
+                <select name="resourceType" required>
+                  <option value="water">Water</option>
+                  <option value="electricity">Electricity</option>
+                </select>
+                <input name="amount" type="number" min="1" step="0.01" placeholder="Usage amount" required />
+                <input name="unit" type="text" placeholder="L or kWh" required />
+                <input name="cost" type="number" min="0" step="0.01" placeholder="Cost" required />
+                <input name="location" type="text" placeholder="Location" required />
+                <input name="recordedAt" type="datetime-local" required />
+                <textarea name="notes" rows="3" placeholder="Optional note"></textarea>
+                <div class="form-action-row">
+                  <button type="submit" class="submit-compact" id="submitReadingButton">Save Reading</button>
+                  <button type="button" class="secondary-compact" id="cancelEditButton" data-action="cancel-edit">Cancel Edit</button>
+                </div>
+              </form>
+              <p class="form-note" id="formStatus">Ready to save usage data.</p>
+            </article>
+
+            <article class="card side-card" id="contacts">
+              <div class="card-head">
+                <div>
+                  <h2>Resource Team</h2>
+                  <p>Monitoring contacts</p>
+                </div>
+                <button class="icon-chip" type="button" data-action="show-team">&#8599;</button>
+              </div>
+              <div class="avatar-row">
+                <button class="avatar avatar--gold" type="button" data-member="Ashish / Admin">AA</button>
+                <button class="avatar avatar--peach" type="button" data-member="Site Manager">SM</button>
+                <button class="avatar avatar--blue" type="button" data-member="IT Support">IT</button>
+                <button class="avatar avatar--green" type="button" data-member="2 more team members">+2</button>
+              </div>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" hidden>
+      <span id="toastMessage">Action completed.</span>
+    </div>
+
+    <script type="module" src="/js/app-quixotic-resource.js"></script>
+  </body>
+</html>

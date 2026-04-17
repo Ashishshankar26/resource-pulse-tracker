@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resource Pulse Water Console</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/styles-quixotic-resource.css" />
+  </head>
+  <body data-page="water" data-resource-type="water">
+    <div class="console-shell">
+      <aside class="rail">
+        <a class="brand-lockup" href="/">
+          <div class="brand-mark">R</div>
+          <div class="brand-copy">
+            <strong>Resource Pulse</strong>
+            <span>Utility Console</span>
+          </div>
+        </a>
+
+        <div class="rail-section">
+          <span class="rail-section__label">Navigate</span>
+        </div>
+        <div class="rail__stack">
+          <a class="rail-link" href="/" data-page-link="dashboard">
+            <span class="rail-link__icon rail-link__icon--dashboard"><span></span><span></span><span></span><span></span></span>
+            <span class="rail-link__text">
+              <strong>Dashboard</strong>
+              <small>Full utility view</small>
+            </span>
+          </a>
+          <a class="rail-link" href="/quixotic-water.html" data-page-link="water">
+            <span class="rail-link__icon rail-link__icon--water">W</span>
+            <span class="rail-link__text">
+              <strong>Water</strong>
+              <small>Usage and monthly trends</small>
+            </span>
+          </a>
+          <a class="rail-link" href="/quixotic-electricity.html" data-page-link="electricity">
+            <span class="rail-link__icon rail-link__icon--electricity">E</span>
+            <span class="rail-link__text">
+              <strong>Electricity</strong>
+              <small>Cost and demand insights</small>
+            </span>
+          </a>
+          <a class="rail-link" href="/#history">
+            <span class="rail-link__icon"><div class="mini-bars"><span></span><span></span><span></span></div></span>
+            <span class="rail-link__text">
+              <strong>Reports</strong>
+              <small>History and exports</small>
+            </span>
+          </a>
+        </div>
+
+        <div class="rail-side-card">
+          <span class="rail-side-card__label">Resource focus</span>
+          <strong id="resourceRailTitle">Water insights</strong>
+          <p id="resourceRailCopy">Deep dive into water usage, average load, and monthly distribution.</p>
+        </div>
+
+        <div class="rail__stack rail__stack--bottom">
+          <button class="rail-link rail-link--compact" type="button" data-action="seed-demo">
+            <span class="rail-link__icon"><div class="mini-wallet"></div></span>
+            <span class="rail-link__text">
+              <strong>Load Demo</strong>
+              <small>Populate sample readings</small>
+            </span>
+          </button>
+          <button class="rail-link rail-link--compact" type="button" data-action="toggle-theme">
+            <span class="rail-link__icon">&#9789;</span>
+            <span class="rail-link__text">
+              <strong>Toggle Theme</strong>
+              <small>Switch light and dark mode</small>
+            </span>
+          </button>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header class="workspace-top">
+          <nav class="pill-nav">
+            <a class="pill-nav__item" href="/">Dashboard</a>
+            <a class="pill-nav__item pill-nav__item--active" href="/quixotic-water.html">Water</a>
+            <a class="pill-nav__item" href="/quixotic-electricity.html">Electricity</a>
+            <a class="pill-nav__item" href="/#history">History</a>
+          </nav>
+
+          <div class="top-actions">
+            <button class="top-action" type="button" data-action="toggle-theme">&#9789;</button>
+            <a class="primary-pill" href="/#capture-panel">+ Add Water Reading</a>
+          </div>
+        </header>
+
+        <section class="headline-row detail-headline">
+          <div>
+            <h1 id="resourceTitle">Water Usage Intelligence</h1>
+            <p class="detail-subtitle" id="resourceSubtitle">Usage averages, monthly movement, and location distribution for water.</p>
+          </div>
+        </section>
+
+        <section class="overview-strip detail-overview-strip">
+          <article class="card overview-card">
+            <span>Total Usage</span>
+            <strong id="detailTotalUsage">--</strong>
+          </article>
+          <article class="card overview-card">
+            <span>Average Usage</span>
+            <strong id="detailAverageUsage">--</strong>
+          </article>
+          <article class="card overview-card">
+            <span>Current Month</span>
+            <strong id="detailCurrentMonthUsage">--</strong>
+          </article>
+          <article class="card overview-card">
+            <span>Peak Day</span>
+            <strong id="detailPeakUsage">--</strong>
+          </article>
+          <article class="card overview-card">
+            <span>Total Cost</span>
+            <strong id="detailTotalCost">--</strong>
+          </article>
+        </section>
+
+        <section class="detail-grid">
+          <article class="card detail-card detail-card--hero">
+            <div class="card-head">
+              <div>
+                <h2 id="resourceHeroTitle">Water performance</h2>
+                <p>Latest monitoring summary across all tracked locations</p>
+              </div>
+            </div>
+            <div class="detail-hero-value" id="detailHeroValue">--</div>
+            <div class="detail-badges">
+              <span class="delta-pill" id="detailActiveLocations">-- locations</span>
+              <span class="delta-pill detail-badge--soft" id="detailEntriesCount">-- readings</span>
+            </div>
+            <p class="detail-copy" id="detailRecommendation">Loading recommendation...</p>
+          </article>
+
+          <article class="card detail-card">
+            <div class="card-head">
+              <div>
+                <h2>Monthly Usage</h2>
+                <p>Aggregated monthly usage pattern</p>
+              </div>
+            </div>
+            <div class="chart-box chart-box--detail">
+              <canvas id="resourceMonthlyChart"></canvas>
+            </div>
+          </article>
+
+          <article class="card detail-card">
+            <div class="card-head">
+              <div>
+                <h2>Average Trend</h2>
+                <p>Recent average and peak movement</p>
+              </div>
+            </div>
+            <div class="chart-box chart-box--detail">
+              <canvas id="resourceTrendChart"></canvas>
+            </div>
+          </article>
+
+          <article class="card detail-card">
+            <div class="card-head">
+              <div>
+                <h2>Location Split</h2>
+                <p>Share of usage by location</p>
+              </div>
+            </div>
+            <div class="chart-box chart-box--detail chart-box--doughnut">
+              <canvas id="resourceLocationChart"></canvas>
+            </div>
+          </article>
+
+          <article class="card detail-card detail-card--wide">
+            <div class="card-head">
+              <div>
+                <h2>Recent Water Records</h2>
+                <p>Latest readings for this resource</p>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Location</th>
+                    <th>Recorded</th>
+                    <th>Amount</th>
+                    <th>Cost</th>
+                    <th>Note</th>
+                  </tr>
+                </thead>
+                <tbody id="detailHistoryBody"></tbody>
+              </table>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" hidden>
+      <span id="toastMessage">Action completed.</span>
+    </div>
+
+    <script type="module" src="/js/app-resource-detail.js"></script>
+  </body>
+</html>
