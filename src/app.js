@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
@@ -9,6 +10,7 @@ import { fileURLToPath } from "node:url";
 import readingRoutes from "./routes/reading-routes.js";
 import analyticsRoutes from "./routes/analytics-routes.js";
 import { requestLogger } from "./middleware/request-logger.js";
+import { getStorageMode } from "./config/database.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -44,6 +46,7 @@ app.get("/api/v1/health", (req, res) => {
   res.json({
     success: true,
     message: "API healthy",
+    storage: getStorageMode(),
     sessionViews: req.session.views,
     timestamp: new Date().toISOString()
   });

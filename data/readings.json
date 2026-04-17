@@ -1,13 +1,23 @@
 [
   {
-    "id": "rd-1776422182518",
+    "id": "rd-1776433555287",
     "resourceType": "electricity",
-    "amount": 200,
+    "amount": 198,
     "unit": "kWh",
-    "cost": 7.45,
-    "location": "Main Building",
-    "recordedAt": "2026-04-17T10:35:00.000Z",
-    "notes": "babu dhokha de di"
+    "cost": 8,
+    "location": "office wing",
+    "recordedAt": "2026-04-17T13:45:00.000Z",
+    "notes": "Birthday Function in office wing"
+  },
+  {
+    "id": "rd-1776433154277",
+    "resourceType": "water",
+    "amount": 1200,
+    "cost": 320,
+    "unit": "L",
+    "location": "Test Lab",
+    "recordedAt": "2026-04-17T10:00:00.000Z",
+    "notes": "verification"
   },
   {
     "id": "rd-1776420158868",

@@ -3,3 +3,4 @@ node_modules/
 server.err.log
 server.out.log
 .DS_Store
+.env

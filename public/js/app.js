@@ -4,10 +4,15 @@ const state = {
 };
 
 const DEFAULT_API_ORIGIN = "http://127.0.0.1:4000";
+const isFilePreview = window.location.protocol === "file:";
+const isNonAppLocalPreview =
+  ["127.0.0.1", "localhost"].includes(window.location.hostname) &&
+  window.location.port !== "" &&
+  window.location.port !== "4000";
 const API_ORIGIN =
-  window.location.protocol.startsWith("http") && window.location.port === "4000"
-    ? window.location.origin
-    : DEFAULT_API_ORIGIN;
+  isFilePreview || isNonAppLocalPreview
+    ? DEFAULT_API_ORIGIN
+    : window.location.origin;
 
 const elements = {
   heroEntries: document.querySelector("#heroEntries"),
