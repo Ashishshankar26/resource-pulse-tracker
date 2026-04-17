@@ -14,7 +14,7 @@ Resource Pulse is a syllabus-aligned full-stack water and electricity tracking s
 2. Start the server:
    `npm start`
 3. Open:
-   `http://localhost:3000`
+   `http://localhost:4000`
 
 ## API endpoints
 
